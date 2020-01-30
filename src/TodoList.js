@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import TodoItem from './TodoItem';
 import './style.css';
 
 class TodoList extends Component {
@@ -7,6 +8,7 @@ class TodoList extends Component {
         super(props);
         this.handleInputChange = this.handleInputChange.bind(this); //节省性能
         this.handleKeyUp = this.handleKeyUp.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
         //组件的数据都必须放在this.state里面，在组件中创建了两个数据
         this.state = {
             inputValue: '',
@@ -39,12 +41,13 @@ class TodoList extends Component {
     }
     getListItems() {
         // 循环中必须要有key
+        // 父子组件的概念
+        // 父组件通过属性的形式向子组件传值
         return this.state.list.map((value, index) => {
-            return (<li key={index} onClick={this.handleItemClick.bind(this, index)}
-             dangerouslySetInnerHTML={{__html: value}}
-            >
-                {/* {value} */}
-                </li>)
+           return (<TodoItem content={value} key={index}
+           deleteFunction={this.handleItemClick}
+           index={index}
+           />)
         })
     }
     render() {
